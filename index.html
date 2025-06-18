@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式会社テックイノベーション - 採用情報</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ヘッダー固定 */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .audio-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .play-btn.playing {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* メインコンテンツ */
+        .main-content {
+            margin-top: 80px;
+        }
+
+        .section {
+            min-height: 100vh;
+            padding: 60px 20px;
+            opacity: 1;
+            transition: all 0.8s ease;
+            position: relative;
+        }
+
+        .section.active {
+            opacity: 1;
+            transform: scale(1.02);
+        }
+
+        .section.highlight {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            box-shadow: inset 0 0 50px rgba(102, 126, 234, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* イントロセクション */
+        .intro {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero-bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .intro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%);
+            z-index: 1;
+        }
+
+        .intro-content {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .intro-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .intro-content p {
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.2s both;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .earphone-notice {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px 30px;
+            border-radius: 25px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.4s both;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .earphone-notice i {
+            font-size: 28px;
+            color: rgba(255, 255, 255, 0.9);
+            flex-shrink: 0;
+        }
+
+        .earphone-notice p {
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        /* 仕事内容セクション */
+        .work-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .work-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .work-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .work-item h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .work-item h3 i {
+            font-size: 1.8rem;
+            color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 社員の声セクション */
+        .employee-voices {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .employee-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .employee-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .employee-card.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .employee-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* 福利厚生セクション */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .benefit-item {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #667eea;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 1日の流れセクション */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            opacity: 0.5;
+            transition: all 0.5s ease;
+        }
+
+        .timeline-item.active {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .timeline-time {
+            width: 100px;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2rem;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-left: 20px;
+        }
+
+        /* CTAセクション */
+        .section.cta {
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.45) 0%, rgba(245, 87, 108, 0.45) 100%);
+            color: #2c3e50;
+            padding: 60px 20px;
+            min-height: 100vh;
+        }
+
+        .section.cta .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .section.cta .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-button {
+            background: white;
+            color: #f5576c;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button.pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* アニメーション */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .play-btn {
+                width: 40px;
+                height: 40px;
+                padding: 0;
+                border-radius: 50%;
+                font-size: 16px;
+            }
+
+            .intro {
+                min-height: 100vh;
+                padding: 48px 0;
+            }
+
+            .intro-content {
+                padding: 0 20px;
+                width: 100%;
+            }
+
+            .intro-content h1 {
+                font-size: 2rem;
+                margin-bottom: 16px;
+            }
+
+            .intro-content p {
+                font-size: 1.1rem;
+                margin-bottom: 24px;
+                padding: 0 16px;
+            }
+
+            .earphone-notice {
+                margin: 0 20px 24px;
+                padding: 16px 20px;
+            }
+
+            .earphone-notice i {
+                font-size: 24px;
+            }
+
+            .earphone-notice p {
+                font-size: 0.9rem;
+                margin: 0;
+            }
+
+            .progress-bar {
+                width: 150px;
+            }
+
+            .work-content,
+            .employee-voices,
+            .benefits-grid {
+                padding: 0 20px;
+                gap: 16px;
+            }
+
+            .work-item,
+            .employee-card,
+            .benefit-item {
+                padding: 16px;
+                margin-bottom: 0;
+                width: 100%;
+            }
+
+            .section-title,
+            .section-subtitle {
+                padding: 0 20px;
+            }
+
+            .timeline {
+                margin: 16px 0;
+            }
+
+            .timeline-item {
+                margin-bottom: 24px;
+                padding: 16px;
+                padding-top: 20px;
+                width: 100%;
+                position: relative;
+                background: transparent;
+                border-radius: 8px;
+            }
+
+            .timeline-time {
+                position: absolute;
+                top: -8px;
+                left: 12px;
+                font-size: 0.85rem;
+                color: #667eea;
+                background: white;
+                padding: 2px 8px;
+                border-radius: 12px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            }
+
+            .timeline-content {
+                width: 100%;
+                background: white;
+                border-radius: 8px;
+                padding: 16px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .timeline-item h4 {
+                font-size: 0.95rem;
+                margin-bottom: 4px;
+            }
+
+            .timeline-item p {
+                font-size: 0.8rem;
+                margin-bottom: 0;
+                color: #666;
+                line-height: 1.4;
+            }
+
+            .employee-photo {
+                display: none;
+            }
+
+            .employee-card {
+                padding: 16px;
+            }
+
+            .benefit-item {
+                padding: 16px;
+                display: flex;
+                align-items: center;
+                text-align: left;
+            }
+
+            .benefit-icon {
+                font-size: 1.4rem;
+                margin-bottom: 0;
+                margin-right: 12px;
+            }
+
+            .benefit-content {
+                flex: 1;
+            }
+
+            .benefit-item h3 {
+                font-size: 1.2rem;
+                margin-bottom: 4px;
+            }
+
+            .benefit-item p {
+                font-size: 0.9rem;
+                margin-bottom: 0;
+            }
+
+            .section.cta {
+                padding: 40px 16px;
+                min-height: 100vh;
+            }
+
+            .section.cta .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .section.cta .section-subtitle {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+            }
+
+            .cta-button {
+                font-size: 0.9rem;
+                padding: 14px 28px;
+            }
+
+            #cta-image {
+                margin-top: 2rem;
+                width: 100%;
+                padding: 0;
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: #2c3e50;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+        }
+
+        /* 個別要素のハイライト効果 */
+        .work-item.highlight,
+        .benefit-item.highlight {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+        }
+
+        .employee-card.highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-8px) scale(1.08);
+        }
+
+        /* 社員画像表示用のスタイル */
+        .section-image-container {
+            width: 100%;
+            min-height: 560px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 32px;
+            position: relative;
+        }
+
+        .section-image {
+            position: absolute;
+            opacity: 0;
+            transition: all 0.7s ease;
+            max-width: 1000px;
+            max-height: 560px;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            object-fit: contain;
+            background: #fff;
+            display: block;
+            margin: 0 auto;
+            transform: translateY(20px);
+            pointer-events: none;
+            visibility: hidden;
+        }
+
+        .section-image.visible {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 1;
+            visibility: visible;
+            transition: 
+                opacity 1s ease-in-out,
+                transform 1.2s ease-out,
+                visibility 0s linear;
+        }
+
+        .section-image:not(.visible) {
+            transition:
+                opacity 0.5s ease-in-out,
+                transform 0.5s ease-in-out,
+                visibility 0s linear 0.5s;
+        }
+
+        @media (max-width: 768px) {
+            .section-image-container {
+                min-height: auto;
+                margin-top: 16px;
+                margin-bottom: 16px;
+                position: relative;
+                height: auto;
+            }
+
+            .section-image {
+                position: relative;
+                max-height: none;
+                height: auto;
+                transform: none;
+                margin: 0;
+            }
+
+            .section-image.visible {
+                transform: none;
+            }
+        }
+
+        /* CTAセクションの画像アニメーション */
+        .cta .section-image-container {
+            width: 100%;
+            min-height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 48px;
+            position: relative;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .cta .section-image {
+            position: absolute;
+            opacity: 0;
+            max-width: 1200px;
+            width: 90%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            object-fit: contain;
+            background: #fff;
+            transform: 
+                perspective(1000px)
+                rotateX(30deg)
+                scale(0.6)
+                translateY(100px);
+            transform-origin: center center;
+            transition: all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: transform, opacity;
+        }
+
+        .cta .section-image.visible {
+            opacity: 1;
+            transform: 
+                perspective(1000px)
+                rotateX(0deg)
+                scale(1)
+                translateY(0);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+        }
+
+        @keyframes floatAnimation {
+            0% {
+                transform: 
+                    perspective(1000px)
+                    rotateX(0deg)
+                    scale(1)
+                    translateY(0);
+            }
+            50% {
+                transform: 
+                    perspective(1000px)
+                    rotateX(2deg)
+                    scale(1.02)
+                    translateY(-10px);
+            }
+            100% {
+                transform: 
+                    perspective(1000px)
+                    rotateX(0deg)
+                    scale(1)
+                    translateY(0);
+            }
+        }
+
+        .cta .section-image.visible {
+            opacity: 1;
+            transform: 
+                perspective(1000px)
+                rotateX(0deg)
+                scale(1)
+                translateY(0);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            animation: floatAnimation 3s ease-in-out infinite;
+        }
+
+        /* セクション共通の背景パターン */
+        .section-pattern {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-pattern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.02;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 仕事内容セクション - 水玉 */
+        #section-work {
+            background-color: #f8f9fa;
+        }
+
+        #section-work::before {
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%23000000' fill-opacity='1'/%3E%3C/svg%3E");
+            background-size: 24px 24px;
+        }
+
+        /* 社員の声セクション - 縦線 */
+        #section-employees {
+            background-color: #ffffff;
+        }
+
+        #section-employees::before {
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 0h10v20H10V0zM9 0H0v20h9V0z' fill='%23000000' fill-opacity='0.03'/%3E%3C/svg%3E");
+            background-size: 40px 40px;
+            opacity: 0.5;
+        }
+
+        /* 福利厚生セクション - 横線 */
+        #section-benefits {
+            background-color: #f8f9fa;
+        }
+
+        #section-benefits::before {
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10h20v9H0v-9zM0 0h20v9H0V0z' fill='%23000000' fill-opacity='0.03'/%3E%3C/svg%3E");
+            background-size: 40px 40px;
+            opacity: 0.5;
+        }
+
+        /* スケジュールセクション - グリッド */
+        #section-schedule {
+            background-color: #ffffff;
+        }
+
+        #section-schedule::before {
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v1H0zM0 19h20v1H0zM0 0v20h1V0zM19 0v20h1V0z' fill='%23000000' fill-opacity='0.03'/%3E%3C/svg%3E");
+            background-size: 30px 30px;
+            opacity: 0.5;
+        }
+
+        /* セクションのコンテンツを背景パターンの上に配置 */
+        .section > .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .section.cta .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-button {
+            padding: 16px 32px;
+            margin-top: 16px;
+        }
+
+        #cta-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-top: 32px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 
+                opacity 1s ease-in-out,
+                transform 1.2s ease-out;
+            visibility: hidden;
+        }
+
+        #cta-image.visible {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 16px;
+                width: 100%;
+            }
+
+            .section {
+                padding: 32px 0;
+                min-height: auto;
+            }
+
+            .intro {
+                min-height: 100vh;
+            }
+
+            .intro-content h1 {
+                font-size: 2rem;
+            }
+
+            .intro-content p {
+                font-size: 1rem;
+            }
+
+            .play-btn {
+                width: 40px;
+                height: 40px;
+                padding: 0;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .play-btn span {
+                display: none;
+            }
+
+            .play-btn i {
+                font-size: 1.2rem;
+            }
+
+            .progress-bar {
+                width: 120px;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 16px;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            /* カードのスタイル調整 */
+            .work-content,
+            .employee-voices,
+            .benefits-grid {
+                gap: 16px;
+                padding: 0 16px;
+            }
+
+            .work-item,
+            .employee-card,
+            .benefit-item {
+                padding: 16px;
+                margin-bottom: 0;
+                width: 100%;
+            }
+
+            .work-item h3 {
+                font-size: 1.2rem;
+                margin-bottom: 8px;
+                gap: 8px;
+            }
+
+            .work-item h3 i {
+                font-size: 1.4rem;
+            }
+
+            .work-item p {
+                font-size: 0.9rem;
+                margin-bottom: 0;
+            }
+
+            .employee-card {
+                padding: 16px;
+            }
+
+            .employee-card h3 {
+                font-size: 1.2rem;
+                margin-bottom: 4px;
+            }
+
+            .employee-card p {
+                font-size: 0.9rem;
+                margin-bottom: 4px;
+            }
+
+            .employee-photo {
+                display: none;
+            }
+
+            .benefit-item {
+                padding: 16px;
+                display: flex;
+                align-items: center;
+                text-align: left;
+            }
+
+            .benefit-icon {
+                font-size: 1.4rem;
+                margin-bottom: 0;
+                margin-right: 12px;
+            }
+
+            .benefit-content {
+                flex: 1;
+            }
+
+            .benefit-item h3 {
+                font-size: 1.2rem;
+                margin-bottom: 4px;
+            }
+
+            .benefit-item p {
+                font-size: 0.9rem;
+                margin-bottom: 0;
+            }
+
+            /* タイムラインの調整 */
+            .timeline {
+                margin: 16px 0;
+            }
+
+            .timeline-item {
+                margin-bottom: 24px;
+                padding: 16px;
+                padding-top: 20px;
+                width: 100%;
+                position: relative;
+                background: transparent;
+                border-radius: 8px;
+            }
+
+            .timeline-time {
+                position: absolute;
+                top: -8px;
+                left: 12px;
+                font-size: 0.85rem;
+                color: #667eea;
+                background: white;
+                padding: 2px 8px;
+                border-radius: 12px;
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            }
+
+            .timeline-content {
+                width: 100%;
+                background: white;
+                border-radius: 8px;
+                padding: 16px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .timeline-item h4 {
+                font-size: 0.95rem;
+                margin-bottom: 4px;
+            }
+
+            .timeline-item p {
+                font-size: 0.8rem;
+                margin-bottom: 0;
+                color: #666;
+                line-height: 1.4;
+            }
+
+            /* 画像コンテナの調整 */
+            .section-image-container {
+                margin: 16px 0;
+                padding: 0 16px;
+            }
+
+            /* CTAセクションの調整 */
+            .section.cta {
+                padding: 40px 16px;
+                min-height: 100vh;
+            }
+
+            .section.cta .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+
+            .section.cta .section-subtitle {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+            }
+
+            .cta-button {
+                font-size: 0.9rem;
+                padding: 14px 28px;
+            }
+
+            #cta-image {
+                margin-top: 2rem;
+                width: 100%;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">株式会社テックイノベーション</div>
+            <div class="audio-controls">
+                <button class="section-nav-btn" id="prevSectionBtn" aria-label="前のセクション" style="font-size:18px; padding:8px 12px; border-radius:50%; border:none; background:#f0f0f0; cursor:pointer;">◀</button>
+                <button class="play-btn" id="playBtn">▶</button>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <button class="section-nav-btn" id="nextSectionBtn" aria-label="次のセクション" style="font-size:18px; padding:8px 12px; border-radius:50%; border:none; background:#f0f0f0; cursor:pointer;">▶</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="main-content">
+        <!-- 1. イントロセクション -->
+        <section class="section intro" id="section-intro">
+            <video class="hero-bg-video" autoplay loop muted playsinline>
+                <source src="https://raw.githubusercontent.com/k-suehiro/images-link/main/hero-movie.mp4" type="video/mp4">
+            </video>
+            <div class="container">
+                <div class="intro-content">
+                    <h1>未来を創る仲間を募集中</h1>
+                    <p>テクノロジーで社会を変革する、私たちと一緒に働きませんか？</p>
+                    <div class="earphone-notice">
+                        <i class="fas fa-headphones"></i>
+                        <p>より良い体験のため、イヤホンやヘッドフォンの使用を推奨します<br>音声ガイドで私たちの会社をご紹介します</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 仕事内容紹介 -->
+        <section class="section section-pattern" id="section-work">
+            <div class="container">
+                <h2 class="section-title">私たちの仕事</h2>
+                <p class="section-subtitle">3つの分野で事業を展開しています</p>
+                <div class="work-content">
+                    <div class="work-item" id="work-ai">
+                        <h3><i class="fas fa-robot"></i>AI・新規サービス開発</h3>
+                        <p>AIとビッグデータを活用した革新的なWebアプリケーションを創り出しています。お客様のニーズに応える最先端のソリューションを提供しています。</p>
+                    </div>
+                    <div class="work-item" id="work-infra">
+                        <h3><i class="fas fa-cloud"></i>システム基盤構築</h3>
+                        <p>クラウドネイティブなインフラ設計から運用まで、スケーラブルで信頼性の高いシステム基盤の構築を担当します。</p>
+                    </div>
+                    <div class="work-item" id="work-data">
+                        <h3><i class="fas fa-chart-line"></i>データ分析・活用</h3>
+                        <p>収集されたデータから価値のある洞察を導き出し、ビジネスの意思決定をサポートするデータ分析業務を行います。</p>
+                    </div>
+                </div>
+                <div class="section-image-container" id="section-work-image">
+                  <img id="section-work-img" class="section-image" src="" alt="" />
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 社員の声 -->
+        <section class="section section-pattern" id="section-employees">
+            <div class="container">
+                <h2 class="section-title">社員の声</h2>
+                <p class="section-subtitle">実際に働く仲間たちの生の声をお聞きください</p>
+                <div class="employee-voices">
+                    <div class="employee-card" data-employee="tanaka">
+                        <div class="employee-photo">田中</div>
+                        <h3>田中 太郎</h3>
+                        <p>エンジニア（3年目）</p>
+                        <p>「新しい技術に常にチャレンジできる環境で、毎日が学びの連続です。」</p>
+                    </div>
+                    <div class="employee-card" data-employee="sato">
+                        <div class="employee-photo">佐藤</div>
+                        <h3>佐藤 花子</h3>
+                        <p>データサイエンティスト（2年目）</p>
+                        <p>「データから新たな価値を見つけ出す喜びを感じながら働いています。」</p>
+                    </div>
+                    <div class="employee-card" data-employee="yamada">
+                        <div class="employee-photo">山田</div>
+                        <h3>山田 次郎</h3>
+                        <p>プロジェクトマネージャー（5年目）</p>
+                        <p>「チームワークを大切にする文化があり、みんなで成長していけます。」</p>
+                    </div>
+                </div>
+                <div class="section-image-container" id="section-employees-image">
+                    <img id="section-employees-img" class="section-image" src="" alt="" />
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 福利厚生・制度 -->
+        <section class="section section-pattern" id="section-benefits">
+            <div class="container">
+                <h2 class="section-title">福利厚生・制度</h2>
+                <p class="section-subtitle">働きやすい環境づくりに力を入れています</p>
+                <div class="benefits-grid">
+                    <div class="benefit-item" id="benefit-holiday">
+                        <div class="benefit-icon">
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>年間休日125日</h3>
+                            <p>十分な休息でリフレッシュしていただけます</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item" id="benefit-remote">
+                        <div class="benefit-icon">
+                            <i class="fas fa-laptop-house"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>フルリモートOK</h3>
+                            <p>柔軟な働き方を実現できます</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item" id="benefit-education">
+                        <div class="benefit-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>教育支援制度</h3>
+                            <p>スキルアップを全面的にサポート</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item" id="benefit-salary">
+                        <div class="benefit-icon">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="benefit-content">
+                            <h3>昇給・賞与</h3>
+                            <p>成果に応じた適正な評価制度</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-image-container">
+                    <img id="benefit-image" class="section-image" src="" alt="福利厚生の画像">
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 1日の流れ -->
+        <section class="section section-pattern" id="section-schedule">
+            <div class="container">
+                <h2 class="section-title">1日の流れ</h2>
+                <p class="section-subtitle">エンジニアの典型的な1日をご紹介します</p>
+                <div class="timeline">
+                    <div class="timeline-item" data-time="9:00">
+                        <div class="timeline-time">9:00</div>
+                        <div class="timeline-content">
+                            <h4>出社・スタンドアップミーティング</h4>
+                            <p>チームメンバーと今日の作業内容を共有し、一日の計画を立てます。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-time="10:00">
+                        <div class="timeline-time">10:00</div>
+                        <div class="timeline-content">
+                            <h4>開発作業に集中</h4>
+                            <p>新機能の実装やバグ修正など、様々なタスクに取り組みます。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-time="12:00">
+                        <div class="timeline-time">12:00</div>
+                        <div class="timeline-content">
+                            <h4>ランチタイム</h4>
+                            <p>同僚との会話を楽しみながら、リフレッシュタイムを過ごします。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-time="14:00">
+                        <div class="timeline-time">14:00</div>
+                        <div class="timeline-content">
+                            <h4>会議・コラボレーション</h4>
+                            <p>チームで協力して課題解決に取り組みます。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-time="16:00">
+                        <div class="timeline-time">16:00</div>
+                        <div class="timeline-content">
+                            <h4>午後の開発・コードレビュー</h4>
+                            <p>開発作業を継続し、コードレビューで品質向上に努めます。</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-time="18:00">
+                        <div class="timeline-time">18:00</div>
+                        <div class="timeline-content">
+                            <h4>業務終了</h4>
+                            <p>今日の成果を確認し、明日の準備をして帰宅します。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. 応募案内（CTA） -->
+        <section class="section cta" id="section-cta">
+            <div class="container">
+                <h2 class="section-title">一緒に未来を創りませんか？</h2>
+                <p class="section-subtitle">私たちと一緒に、テクノロジーで未来を創ってみませんか？<br>あなたのご応募を、心よりお待ちしています。</p>
+                <a href="#apply" class="cta-button" id="ctaButton">詳しい募集要項・応募はこちら</a>
+                <img id="cta-image" src="" alt="採用応募案内">
+            </div>
+        </section>
+    </main>
+
+    <!-- 音声ファイル（複数セクション対応） -->
+    <div id="audioContainer">
+        <audio id="audio-intro" preload="auto">
+            <source src="https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-intro.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audio-work" preload="auto">
+            <source src="https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-work.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audio-employees" preload="auto">
+            <source src="https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-employees.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audio-benefits" preload="auto">
+            <source src="https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-benefits.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audio-schedule" preload="auto">
+            <source src="https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-schedule.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="audio-cta" preload="auto">
+            <source src="https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-cta.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        // 音声設定
+        const audioConfig = {
+            companyName: '株式会社テックイノベーション',
+            sections: [
+                {
+                    id: 'section-intro',
+                    audioFile: 'https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-intro.mp3',
+                    duration: 30, // 秒
+                    elements: []
+                },
+                {
+                    id: 'section-work',
+                    audioFile: 'https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-work.mp3',
+                    duration: 45,
+                    elements: [
+                        { id: 'work-ai', startTime: 11, duration: 13, image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/work01.jpg' },
+                        { id: 'work-infra', startTime: 26, duration: 12, image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/work02.jpg' },
+                        { id: 'work-data', startTime: 40, duration: 13, image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/work03.jpg' }
+                    ]
+                },
+                {
+                    id: 'section-employees',
+                    audioFile: 'https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-employees.mp3',
+                    duration: 40,
+                    elements: [
+                        { id: 'employee-tanaka', startTime: 6, duration: 11, image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/staff-tanaka.jpg' },
+                        { id: 'employee-sato', startTime: 18, duration: 10, image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/staff-sato.jpg' },
+                        { id: 'employee-yamada', startTime: 29, duration: 11, image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/staff-yamada.jpg' }
+                    ]
+                },
+                {
+                    id: 'section-benefits',
+                    audioFile: 'https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-benefits.mp3',
+                    duration: 35,
+                    elements: [
+                        { 
+                            id: 'benefit-holiday', 
+                            startTime: 4, 
+                            duration: 6,
+                            image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/holiday.jpg'
+                        },
+                        { 
+                            id: 'benefit-remote', 
+                            startTime: 11, 
+                            duration: 6,
+                            image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/full-remote.jpg'
+                        },
+                        { 
+                            id: 'benefit-education', 
+                            startTime: 18, 
+                            duration: 8,
+                            image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/skill-up.jpg'
+                        },
+                        { 
+                            id: 'benefit-salary', 
+                            startTime: 27, 
+                            duration: 6,
+                            image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/evaluation.jpg'
+                        }
+                    ]
+                },
+                {
+                    id: 'section-schedule',
+                    audioFile: 'https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-schedule.mp3',
+                    duration: 50,
+                    elements: [
+                        { id: 'time-9', startTime: 5, duration: 10 },
+                        { id: 'time-10', startTime: 15, duration: 10 },
+                        { id: 'time-12', startTime: 25, duration: 8 },
+                        { id: 'time-14', startTime: 33, duration: 10 },
+                        { id: 'time-16', startTime: 43, duration: 8 },
+                        { id: 'time-18', startTime: 52, duration: 10 }
+                    ]
+                },
+                {
+                    id: 'section-cta',
+                    audioFile: 'https://raw.githubusercontent.com/k-suehiro/audio-link/main/section-cta.mp3',
+                    duration: 25,
+                    elements: [
+                        {
+                            id: 'cta-welcome',
+                            startTime: 5,
+                            duration: 20,
+                            image: 'https://raw.githubusercontent.com/k-suehiro/images-link/main/welcome.jpg'
+                        }
+                    ]
+                }
+            ]
+        };
+
+        class AudioVisualSync {
+            constructor(config) {
+                this.config = config;
+                this.currentSection = 0;
+                this.isPlaying = false;
+                this.audio = new Audio();
+                this.audioElements = {};
+                this.init();
+            }
+
+            init() {
+                // 音声要素の初期化（HTMLの<audio>タグを取得）
+                this.config.sections.forEach(section => {
+                    // 例: id='section-work' → audio-work
+                    const audioId = 'audio-' + section.id.split('-')[1];
+                    this.audioElements[section.id] = document.getElementById(audioId);
+                });
+
+                // イベントリスナーの設定
+                this.setupEventListeners();
+                
+                // 初期状態の設定
+                this.updateSectionHighlight(0);
+                this.updateSectionNavButtons();
+            }
+
+            setupEventListeners() {
+                // 再生ボタン
+                const playBtn = document.getElementById('playBtn');
+                if (playBtn) {
+                    playBtn.addEventListener('click', () => this.togglePlay());
+                }
+
+                // 前・次ボタン
+                const prevBtn = document.getElementById('prevSectionBtn');
+                const nextBtn = document.getElementById('nextSectionBtn');
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => this.goToPrevSection());
+                }
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => this.goToNextSection());
+                }
+
+                // 音声イベント（HTMLの<audio>タグに付与）
+                Object.values(this.audioElements).forEach(audio => {
+                    audio.addEventListener('timeupdate', () => this.updateProgress());
+                    audio.addEventListener('ended', () => this.onAudioEnd());
+                    audio.addEventListener('error', () => this.handleAudioError());
+                });
+
+                // 社員カードのクリック
+                document.querySelectorAll('.employee-card').forEach(card => {
+                    card.addEventListener('click', (e) => this.selectEmployee(e.target.closest('.employee-card')));
+                });
+            }
+
+            goToPrevSection() {
+                if (this.currentSection > 0) {
+                    this.currentSection--;
+                    this.updateSectionHighlight(this.currentSection);
+                    this.scrollToSection(this.config.sections[this.currentSection].id);
+                    this.play();
+                    this.updateSectionNavButtons();
+                }
+            }
+
+            goToNextSection() {
+                if (this.currentSection < this.config.sections.length - 1) {
+                    this.currentSection++;
+                    this.updateSectionHighlight(this.currentSection);
+                    this.scrollToSection(this.config.sections[this.currentSection].id);
+                    this.play();
+                    this.updateSectionNavButtons();
+                }
+            }
+
+            updateSectionNavButtons() {
+                const prevBtn = document.getElementById('prevSectionBtn');
+                const nextBtn = document.getElementById('nextSectionBtn');
+                if (prevBtn) prevBtn.disabled = this.currentSection === 0;
+                if (nextBtn) nextBtn.disabled = this.currentSection === this.config.sections.length - 1;
+            }
+
+            togglePlay() {
+                if (this.isPlaying) {
+                    this.pause();
+                } else {
+                    this.play();
+                }
+            }
+
+            play() {
+                const currentSection = this.config.sections[this.currentSection];
+                this.audio = this.audioElements[currentSection.id];
+
+                // 前の音声を停止
+                Object.values(this.audioElements).forEach(audio => {
+                    audio.pause();
+                    audio.currentTime = 0;
+                });
+
+                if (this.audio) {
+                    this.audio.play().then(() => {
+                        this.isPlaying = true;
+                        this.updatePlayButton(true);
+                        this.scrollToSection(currentSection.id);
+                    }).catch(error => {
+                        console.error('音声再生エラー:', error);
+                        this.handleAudioError();
+                    });
+                }
+            }
+
+            pause() {
+                if (this.audio) {
+                    this.audio.pause();
+                }
+                this.isPlaying = false;
+                this.updatePlayButton(false);
+            }
+
+            updateProgress() {
+                if (this.audio && this.audio.duration) {
+                    const progress = (this.audio.currentTime / this.audio.duration) * 100;
+                    this.updateProgressBar(progress);
+                    this.updateElements(this.audio.currentTime);
+                }
+            }
+
+            updateElements(currentTime) {
+                const currentSection = this.config.sections[this.currentSection];
+                
+                currentSection.elements.forEach(element => {
+                    if (element.id.startsWith('employee-')) {
+                        const employeeId = element.id.split('-')[1];
+                        const card = document.querySelector(`.employee-card[data-employee='${employeeId}']`);
+                        if (card) {
+                            if (currentTime >= element.startTime && currentTime < element.startTime + element.duration) {
+                                card.classList.add('highlight', 'active');
+                            } else {
+                                card.classList.remove('highlight', 'active');
+                            }
+                        }
+
+                        // 社員画像の表示
+                        if (currentSection.id === 'section-employees') {
+                            const img = document.getElementById('section-employees-img');
+                            let activeEmployeeImage = null;
+                            currentSection.elements.forEach(e => {
+                                if (e.id.startsWith('employee-')) {
+                                    if (currentTime >= e.startTime && currentTime < e.startTime + e.duration) {
+                                        activeEmployeeImage = e;
+                                    }
+                                }
+                            });
+                            if (img) {
+                                if (activeEmployeeImage) {
+                                    if (img.src !== activeEmployeeImage.image) {
+                                        img.src = activeEmployeeImage.image;
+                                        img.alt = activeEmployeeImage.id;
+                                    }
+                                    img.classList.add('visible');
+                                } else {
+                                    img.classList.remove('visible');
+                                    setTimeout(() => {
+                                        if (!img.classList.contains('visible')) {
+                                            img.src = '';
+                                        }
+                                    }, 700);
+                                }
+                            }
+                        }
+                    } else if (element.id.startsWith('time-')) {
+                        // タイムライン（1日の流れ）
+                        const hour = element.id.split('-')[1];
+                        const selector = `.timeline-item[data-time='${hour}:00']`;
+                        const timelineItem = document.querySelector(selector);
+                        if (timelineItem) {
+                            if (currentTime >= element.startTime && currentTime < element.startTime + element.duration) {
+                                timelineItem.classList.add('active');
+                            } else {
+                                timelineItem.classList.remove('active');
+                            }
+                        }
+                    } else if (element.id.startsWith('work-')) {
+                        const domElement = document.getElementById(element.id);
+                        if (domElement) {
+                            if (currentTime >= element.startTime && currentTime < element.startTime + element.duration) {
+                                domElement.classList.add('highlight');
+                            } else {
+                                domElement.classList.remove('highlight');
+                            }
+                        }
+                        // work-カードの画像表示
+                        if (currentSection.id === 'section-work') {
+                            const img = document.getElementById('section-work-img');
+                            let activeWorkImage = null;
+                            currentSection.elements.forEach(e => {
+                                if (e.id.startsWith('work-')) {
+                                    if (currentTime >= e.startTime && currentTime < e.startTime + e.duration) {
+                                        activeWorkImage = e;
+                                    }
+                                }
+                            });
+                            if (img) {
+                                if (activeWorkImage) {
+                                    if (img.src !== activeWorkImage.image) {
+                                        img.src = activeWorkImage.image;
+                                        img.alt = activeWorkImage.id;
+                                    }
+                                    img.classList.add('visible');
+                                } else {
+                                    img.classList.remove('visible');
+                                    setTimeout(() => {
+                                        if (!img.classList.contains('visible')) {
+                                            img.src = '';
+                                        }
+                                    }, 700);
+                                }
+                            }
+                        }
+                    } else if (element.id.startsWith('benefit-')) {
+                        // benefit-itemの処理
+                        const domElement = document.getElementById(element.id);
+                        if (domElement) {
+                            if (currentTime >= element.startTime && currentTime < element.startTime + element.duration) {
+                                domElement.classList.add('highlight');
+                            } else {
+                                domElement.classList.remove('highlight');
+                            }
+                        }
+                        // benefit-itemの画像表示
+                        if (currentSection.id === 'section-benefits') {
+                            const img = document.getElementById('benefit-image');
+                            let activeBenefitImage = null;
+                            currentSection.elements.forEach(e => {
+                                if (e.id.startsWith('benefit-')) {
+                                    if (currentTime >= e.startTime && currentTime < e.startTime + e.duration) {
+                                        activeBenefitImage = e;
+                                    }
+                                }
+                            });
+                            if (img) {
+                                if (activeBenefitImage) {
+                                    if (img.src !== activeBenefitImage.image) {
+                                        img.src = activeBenefitImage.image;
+                                        img.alt = activeBenefitImage.id;
+                                    }
+                                    img.classList.add('visible');
+                                } else {
+                                    img.classList.remove('visible');
+                                    setTimeout(() => {
+                                        if (!img.classList.contains('visible')) {
+                                            img.src = '';
+                                        }
+                                    }, 700);
+                                }
+                            }
+                        }
+                    } else if (element.id === 'cta-welcome') {
+                        // CTA画像の表示
+                        if (currentSection.id === 'section-cta') {
+                            const img = document.getElementById('cta-image');
+                            if (img) {
+                                if (currentTime >= element.startTime && currentTime < element.startTime + element.duration) {
+                                    if (img.src !== element.image) {
+                                        img.src = element.image;
+                                        img.alt = 'Welcome to our team';
+                                    }
+                                    requestAnimationFrame(() => {
+                                        img.classList.add('visible');
+                                    });
+                                } else {
+                                    img.classList.remove('visible');
+                                    setTimeout(() => {
+                                        if (!img.classList.contains('visible')) {
+                                            img.src = '';
+                                        }
+                                    }, 1000);
+                                }
+                            }
+                        }
+                    } else {
+                        // 通常のid要素
+                        const domElement = document.getElementById(element.id);
+                        if (domElement) {
+                            if (currentTime >= element.startTime && currentTime < element.startTime + element.duration) {
+                                domElement.classList.add('highlight');
+                            } else {
+                                domElement.classList.remove('highlight');
+                            }
+                        }
+                    }
+                });
+            }
+
+            updateProgressBar(progress) {
+                const progressFill = document.getElementById('progressFill');
+                if (progressFill) {
+                    progressFill.style.width = `${progress}%`;
+                }
+            }
+
+            updatePlayButton(isPlaying) {
+                const playBtn = document.getElementById('playBtn');
+                if (playBtn) {
+                    playBtn.textContent = window.innerWidth <= 768 
+                        ? (isPlaying ? '⏸' : '▶')
+                        : (isPlaying ? '⏸ 停止' : '▶ 音声ガイド開始');
+                    playBtn.classList.toggle('playing', isPlaying);
+                }
+            }
+
+            onAudioEnd() {
+                if (this.currentSection < this.config.sections.length - 1) {
+                    this.currentSection++;
+                    this.updateSectionHighlight(this.currentSection);
+                    this.scrollToSection(this.config.sections[this.currentSection].id);
+                    this.updateSectionNavButtons();
+                    setTimeout(() => {
+                        this.play();
+                    }, 500);
+                } else {
+                    this.isPlaying = false;
+                    this.updatePlayButton(false);
+                    this.highlightCTA();
+                    this.updateSectionNavButtons();
+                }
+            }
+
+            scrollToSection(sectionId) {
+                const element = document.getElementById(sectionId);
+                const header = document.querySelector('.header');
+                const headerHeight = header ? header.offsetHeight : 0;
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                    const top = rect.top + scrollTop - headerHeight - 24;
+                    window.scrollTo({
+                        top: top,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+
+            updateSectionHighlight(sectionIndex) {
+                // 全セクションの強調を解除
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active', 'highlight');
+                });
+
+                // 現在のセクションを強調
+                const currentSection = this.config.sections[sectionIndex];
+                const element = document.getElementById(currentSection.id);
+                if (element) {
+                    element.classList.add('active', 'highlight');
+                }
+            }
+
+            selectEmployee(card) {
+                document.querySelectorAll('.employee-card').forEach(c => {
+                    c.classList.remove('active');
+                });
+                card.classList.add('active');
+            }
+
+            highlightCTA() {
+                const ctaButton = document.getElementById('ctaButton');
+                if (ctaButton) {
+                    ctaButton.classList.add('pulse');
+                }
+            }
+
+            handleAudioError() {
+                console.error('音声ファイルの読み込みに失敗しました');
+                this.isPlaying = false;
+                this.updatePlayButton(false);
+            }
+        }
+
+        // アプリケーション初期化
+        document.addEventListener('DOMContentLoaded', () => {
+            const sync = new AudioVisualSync(audioConfig);
+            window.audioVisualSync = sync;  // グローバルに保存して再利用可能に
+            
+            // 初期表示時のボタンテキストを設定
+            const playBtn = document.getElementById('playBtn');
+            if (playBtn) {
+                playBtn.textContent = window.innerWidth <= 768 ? '▶' : '▶ 音声ガイド開始';
+            }
+            
+            // スムーズスクロール
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // 初期アニメーション
+            setTimeout(() => {
+                document.querySelector('.intro').classList.add('active');
+            }, 500);
+        });
+
+        // レスポンシブ対応のためのリサイズハンドラ
+        window.addEventListener('resize', () => {
+            const sync = window.audioVisualSync;
+            if (sync) {
+                sync.updatePlayButton(sync.isPlaying);
+            }
+        });
+    </script>
+</body>
+</html>
